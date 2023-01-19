@@ -1,2 +1,2 @@
 # Accounting_Solutions
-Clean Architecture , Online Muhasebe Programı BackEnd
+.NET Core Clean Architecture , Online Muhasebe Programı BackEnd
