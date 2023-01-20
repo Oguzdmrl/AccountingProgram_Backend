@@ -1,5 +1,9 @@
+using AccountingSolutions.Application.Services.AppServices;
+using AccountingSolutions.Domain.AppEntities.Identity;
 using AccountingSolutions.Persistance.Context;
+using AccountingSolutions.Persistance.Services.AppServices;
 using AccountingSolutions.Presentation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -9,10 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddMediatR(typeof(AccountingSolutions.Application.AssemblyReference).Assembly);
+builder.Services.AddAutoMapper(typeof(AccountingSolutions.Persistance.AssemblyReference).Assembly);
+
 builder.Services.AddControllers().AddApplicationPart(typeof(AssemblyReferance).Assembly);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+
 builder.Services.AddSwaggerGen(setup =>
 {
     var jwtSecuritySheme = new OpenApiSecurityScheme
