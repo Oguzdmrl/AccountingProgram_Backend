@@ -26,8 +26,4 @@
     <ProjectReference Include="..\..\Core\AccountingSolutions.Domain\AccountingSolutions.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\CompanyServices\" />
-  </ItemGroup>
-
 </Project>
