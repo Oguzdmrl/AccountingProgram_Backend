@@ -1,15 +1,14 @@
+﻿using AccountingSolutions.Domain.AppEntities.Identity;
 using AccountingSolutions.WebApi.Configurations;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.InstallServices(builder.Configuration, typeof(IServiceInstaller).Assembly);
+builder.Services
+    .InstallServices(
+    builder.Configuration, typeof(IServiceInstaller).Assembly);
 
 var app = builder.Build();
-
-//using (var scope = app.Services.CreateScope())
-//{
-//   scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate;
-//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -18,10 +17,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//app.UseExceptionMiddleware();
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scoped = app.Services.CreateScope())
+{
+    var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    if (!userManager.Users.Any())
+    {
+        userManager.CreateAsync(new AppUser
+        {
+            UserName = "oguz",
+            Email = "oguzdemirel@gmail.com",
+            Id = Guid.NewGuid().ToString(),
+            NameLastName = "Oğuz Demirel"
+        }, "Password12*").Wait();
+    }
+}
 
 app.Run();

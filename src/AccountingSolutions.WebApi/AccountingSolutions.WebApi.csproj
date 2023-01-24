@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\External\AccountingSolutions.Infrastructure\AccountingSolutions.Infrastructure.csproj" />
     <ProjectReference Include="..\External\AccountingSolutions.Persistance\AccountingSolutions.Persistance.csproj" />
     <ProjectReference Include="..\External\AccountingSolutions.Presentation\AccountingSolutions.Presentation.csproj" />
   </ItemGroup>
