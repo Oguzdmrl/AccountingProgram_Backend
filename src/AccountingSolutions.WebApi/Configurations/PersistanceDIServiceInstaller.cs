@@ -20,6 +20,7 @@ namespace AccountingSolutions.WebApi.Configurations
             #region Services
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IUCAFService, UCAFService>();
+            services.AddScoped<IRoleService, RoleService>();
             #endregion
             #region Repositories
             services.AddScoped<IUCAFCommandRepository, UCAFCommandRepository>();
